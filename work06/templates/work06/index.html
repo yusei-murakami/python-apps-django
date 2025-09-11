@@ -1,0 +1,19 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>計算ツール集</title>
+    <link rel="stylesheet" href="{% static 'work06/style.css' %}">
+</head>
+<body>
+    <h1>計算ツール集</h1>
+    <ul>
+        <li><a href="{% url 'work06:reiwa' %}">西暦↔和暦変換</a></li>
+        <li><a href="{% url 'work06:bmi' %}">BMI計算</a></li>
+        <li><a href="{% url 'work06:warikan' %}">割り勘計算</a></li>
+        <li><a href="{% url 'work06:chokin' %}">貯金計算</a></li>
+        <li><a href="{% url 'work06:calculator' %}">四則演算計算機</a></li>
+    </ul>
+</body>
+</html>

@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>西暦↔和暦変換</title>
+    <link rel="stylesheet" href="{% static 'work06/style.css' %}">
+</head>
+<body>
+    <h1>西暦↔和暦変換</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label>西暦 → 和暦:</label>
+        <input type="text" name="year" placeholder="西暦を入力"><br><br>
+        <label>和暦 → 西暦:</label>
+        <input type="text" name="era" placeholder="例: 令和5年"><br><br>
+        <button type="submit">変換</button>
+    </form>
+    {% if result %}
+        <p>結果: {{ result }}</p>
+    {% endif %}
+    <p><a href="{% url 'work06:index' %}">トップページに戻る</a></p>
+</body>
+</html>

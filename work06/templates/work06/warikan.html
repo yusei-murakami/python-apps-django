@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>割り勘計算</title>
+    <link rel="stylesheet" href="{% static 'work06/style.css' %}">
+</head>
+<body>
+    <h1>割り勘計算</h1>
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="total" placeholder="合計金額">
+        <input type="text" name="people" placeholder="人数">
+        <button type="submit">計算</button>
+    </form>
+    {% if result %}
+        <p>一人あたり: {{ result }}</p>
+    {% endif %}
+    <p><a href="{% url 'work06:index' %}">トップページに戻る</a></p>
+</body>
+</html>

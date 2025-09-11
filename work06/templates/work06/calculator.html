@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>四則演算計算機</title>
+    <link rel="stylesheet" href="{% static 'work06/style.css' %}">
+</head>
+<body>
+    <h1>四則演算計算機</h1>
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="num1" placeholder="数字1">
+        <select name="operator">
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+        </select>
+        <input type="text" name="num2" placeholder="数字2">
+        <button type="submit">計算</button>
+    </form>
+    {% if result %}
+        <p>結果: {{ result }}</p>
+    {% endif %}
+    <p><a href="{% url 'work06:index' %}">トップページに戻る</a></p>
+</body>
+</html>

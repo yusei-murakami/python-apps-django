@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>BMI計算</title>
+    <link rel="stylesheet" href="{% static 'work06/style.css' %}">
+</head>
+<body>
+    <h1>BMI計算</h1>
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="weight" placeholder="体重(kg)">
+        <input type="text" name="height" placeholder="身長(cm)">
+        <button type="submit">計算</button>
+    </form>
+    {% if result %}
+        <p>あなたのBMI: {{ result }}</p>
+    {% endif %}
+    <p><a href="{% url 'work06:index' %}">トップページに戻る</a></p>
+</body>
+</html>
