@@ -1,0 +1,18 @@
+{% extends 'work001/base.html' %}
+{% block content %}
+<h2>カテゴリ管理</h2>
+<form method="post">
+    {% csrf_token %}
+    <label>カテゴリ名: <input type="text" name="name"></label>
+    <label><input type="checkbox" name="is_income"> 収入カテゴリ</label>
+    <button type="submit">追加</button>
+</form>
+
+<ul>
+{% for c in categories %}
+    <li>{{ c.name }} {% if c.is_income %}(収入){% else %}(支出){% endif %}</li>
+{% empty %}
+    <li>カテゴリがありません</li>
+{% endfor %}
+</ul>
+{% endblock %}

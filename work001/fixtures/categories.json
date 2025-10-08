@@ -1,0 +1,8 @@
+[
+    {"model": "work001.category", "pk": 1, "fields": {"name": "食費"}},
+    {"model": "work001.category", "pk": 2, "fields": {"name": "交通費"}},
+    {"model": "work001.category", "pk": 3, "fields": {"name": "光熱費"}},
+    {"model": "work001.category", "pk": 4, "fields": {"name": "娯楽"}},
+    {"model": "work001.category", "pk": 5, "fields": {"name": "その他"}}
+  ]
+  

@@ -1,0 +1,15 @@
+{% extends 'work07/base.html' %}
+
+{% block title %}じゃんけん{% endblock %}
+
+{% block content %}
+<h2>じゃんけん</h2>
+{% if user_choice %}
+<p>あなた: {{ user_choice }} / CPU: {{ cpu_choice }} → 結果: {{ result }}</p>
+{% endif %}
+<div class="buttons">
+    {% for c in choices %}
+    <a class="btn" href="?choice={{ c }}">{{ c }}</a>
+    {% endfor %}
+</div>
+{% endblock %}

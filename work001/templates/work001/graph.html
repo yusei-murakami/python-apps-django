@@ -1,0 +1,80 @@
+{% extends "work001/base.html" %}
+{% block content %}
+<h2>カテゴリ別集計</h2>
+
+<canvas id="expenseChart" width="400" height="200"></canvas>
+<canvas id="incomeChart" width="400" height="200"></canvas>
+
+<h2>月ごとの推移</h2>
+<canvas id="trendChart" width="400" height="200"></canvas>
+
+<!-- JSON埋め込み -->
+{{ expenses_data|json_script:"expenses-data" }}
+{{ incomes_data|json_script:"incomes-data" }}
+{{ trend_data|json_script:"trend-data" }}
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  // データ取得
+  const expensesData = JSON.parse(document.getElementById('expenses-data').textContent);
+  const incomesData = JSON.parse(document.getElementById('incomes-data').textContent);
+  const trendData = JSON.parse(document.getElementById('trend-data').textContent);
+
+  // ===== 支出カテゴリ別 =====
+  const expenseLabels = expensesData.map(d => d.category__name);
+  const expenseValues = expensesData.map(d => d.total);
+
+  new Chart(document.getElementById('expenseChart'), {
+    type: 'pie',
+    data: {
+      labels: expenseLabels,
+      datasets: [{
+        data: expenseValues,
+        backgroundColor: ['#ff6384','#36a2eb','#ffce56','#4bc0c0','#9966ff']
+      }]
+    }
+  });
+
+  // ===== 収入カテゴリ別 =====
+  const incomeLabels = incomesData.map(d => d.category__name);
+  const incomeValues = incomesData.map(d => d.total);
+
+  new Chart(document.getElementById('incomeChart'), {
+    type: 'pie',
+    data: {
+      labels: incomeLabels,
+      datasets: [{
+        data: incomeValues,
+        backgroundColor: ['#36a2eb','#4bc0c0','#9966ff','#ff6384','#ffce56']
+      }]
+    }
+  });
+
+  // ===== 月ごとの収支推移 =====
+  const trendLabels = trendData.map(d => d.month);
+  const incomeTrend = trendData.map(d => d.income);
+  const expenseTrend = trendData.map(d => d.expense);
+
+  new Chart(document.getElementById('trendChart'), {
+    type: 'line',
+    data: {
+      labels: trendLabels,
+      datasets: [
+        {
+          label: '収入',
+          data: incomeTrend,
+          borderColor: 'blue',
+          fill: false
+        },
+        {
+          label: '支出',
+          data: expenseTrend,
+          borderColor: 'red',
+          fill: false
+        }
+      ]
+    }
+  });
+</script>
+{% endblock %}

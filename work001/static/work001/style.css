@@ -1,0 +1,23 @@
+body {
+    font-family: sans-serif;
+    margin: 20px;
+}
+header {
+    background: #eee;
+    padding: 10px;
+}
+nav a {
+    margin-right: 10px;
+    text-decoration: none;
+    color: blue;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+}
+th, td {
+    border: 1px solid #ccc;
+    padding: 5px;
+    text-align: left;
+}

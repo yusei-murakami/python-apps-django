@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>{% block title %}Work07{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'work07/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1><a href="{% url 'work07:index' %}">Work07 トップ</a></h1>
+        <nav>
+            <a href="{% url 'work07:omikuji' %}">おみくじ</a>
+            <a href="{% url 'work07:janken' %}">じゃんけん</a>
+            <a href="{% url 'work07:highlow' %}">Hi & Low</a>
+        </nav>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

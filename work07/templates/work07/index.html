@@ -1,0 +1,12 @@
+{% extends 'work07/base.html' %}
+
+{% block title %}トップ{% endblock %}
+
+{% block content %}
+<h2>ボタンで遊べるゲーム一覧</h2>
+<ul>
+    <li><a class="btn" href="{% url 'work07:omikuji' %}">おみくじ</a></li>
+    <li><a class="btn" href="{% url 'work07:janken' %}">じゃんけん</a></li>
+    <li><a class="btn" href="{% url 'work07:highlow' %}">Hi & Low</a></li>
+</ul>
+{% endblock %}

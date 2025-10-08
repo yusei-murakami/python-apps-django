@@ -1,0 +1,9 @@
+{% extends 'work07/base.html' %}
+
+{% block title %}おみくじ{% endblock %}
+
+{% block content %}
+<h2>おみくじ</h2>
+<p class="result">{{ result }}</p>
+<a class="btn" href="{% url 'work07:omikuji' %}">もう一度引く</a>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'work001/base.html' %}
+
+{% block content %}
+<h2>支出一覧</h2>
+<p>今月の支出合計: {{ expenses_month }}円 / 収入合計: {{ incomes_month }}円 / 収支: {{ balance }}円</p>
+<a href="{% url 'work001:expense_add' %}">＋支出追加</a>
+
+<table>
+    <tr><th>日付</th><th>カテゴリ</th><th>金額</th><th>メモ</th><th>操作</th></tr>
+    {% for e in expenses %}
+    <tr>
+        <td>{{ e.date }}</td>
+        <td>{{ e.category }}</td>
+        <td>{{ e.amount }}</td>
+        <td>{{ e.memo }}</td>
+        <td>
+            <a href="{% url 'work001:expense_edit' e.pk %}">編集</a>
+            <a href="{% url 'work001:expense_delete' e.pk %}">削除</a>
+        </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="5">データなし</td></tr>
+    {% endfor %}
+</table>
+
+<h2>収入一覧</h2>
+<a href="{% url 'work001:income_add' %}">＋収入追加</a>
+
+<table>
+    <tr><th>日付</th><th>カテゴリ</th><th>金額</th><th>メモ</th><th>操作</th></tr>
+    {% for i in incomes %}
+    <tr>
+        <td>{{ i.date }}</td>
+        <td>{{ i.category }}</td>
+        <td>{{ i.amount }}</td>
+        <td>{{ i.memo }}</td>
+        <td>
+            <a href="{% url 'work001:income_edit' i.pk %}">編集</a>
+            <a href="{% url 'work001:income_delete' i.pk %}">削除</a>
+        </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="5">データなし</td></tr>
+    {% endfor %}
+</table>
+{% endblock %}

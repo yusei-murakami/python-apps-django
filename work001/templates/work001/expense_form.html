@@ -1,0 +1,11 @@
+{% extends "work001/base.html" %}
+
+{% block content %}
+<h2>支出を追加</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">保存</button>
+</form>
+<a href="{% url 'work001:index' %}">戻る</a>
+{% endblock %}

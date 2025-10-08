@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>家計簿</title>
+    <link rel="stylesheet" href="{% static 'work001/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>家計簿アプリ</h1>
+        <nav>
+            <a href="{% url 'work001:index' %}">一覧</a>
+            <a href="{% url 'work001:graph' %}">グラフ</a>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

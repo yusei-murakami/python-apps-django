@@ -17,10 +17,20 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from work05.views import index
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("index/", index),
     path("work05/", include("work05.urls")),
-    path("work06/", include("work06.urls")),
+    path("work06/", include("work06.urls")), 
+    path('work07/', include('work07.urls')),
+    path("work001/", include("work001.urls")),
+    path('work08/', include('work08.urls')),
+    path('work09/', include('work09.urls')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
