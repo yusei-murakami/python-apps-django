@@ -16,20 +16,22 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from work05.views import index
+from django.views.generic import TemplateView
 from django.conf import settings
 from django.conf.urls.static import static
-
-
+from . import views
 urlpatterns = [
+    path('', views.index, name='index'),  # ←最上段へ
     path('admin/', admin.site.urls),
-    path("index/", index),
+    path('accounts/', include('django.contrib.auth.urls')),
     path("work05/", include("work05.urls")),
     path("work06/", include("work06.urls")), 
     path('work07/', include('work07.urls')),
     path("work001/", include("work001.urls")),
     path('work08/', include('work08.urls')),
     path('work09/', include('work09.urls')),
+    path('work10/', include('work10.urls', namespace='work10')),
+    path('sns/', include('sns.urls')),
 ]
 
 if settings.DEBUG:

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'sns/reset.css' %}">
+    <link rel="stylesheet" href="{% static 'sns/style.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOME</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="sidebar_left">
+            <h1>Photos</h1>
+            <div class="sidebar_nav">
+                <nav>
+                    <ul>
+                        <li class="sidebar_li"><a href="#">ホーム</a></li>
+                        <li class="sidebar_li"><a href="#">検索</a></li>
+                        <li class="sidebar_li"><a href="#">通知</a></li>
+                        <li class="sidebar_li"><a href="#">プロフィール</a></li>
+                        <li class="sidebar_li"><a href="#">設定</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <div class="center">
+            <!-- 今までの思い出 -->
+            <section class="panel">
+                <div class="profile_header">
+                    <div class="profile_pic"></div>
+                    <div class="profile_info">
+                        <p>アイコン</p>
+                        <p>名前@username</p>
+                        <p>フォロワー: 12324</p>
+                        <p>フォロー中: 4</p>
+                    </div>
+                    <div class="kyouno_omoide">
+                        <p>🔥 328</p>
+                        <h3>今日の思い出</h3>
+                        <div class="p">
+                            <p>❤️215</p>
+                            <p>🔁15</p>
+                        </div>
+                        <div class="past-row">
+                            <div class="past-thumb">今日の写真</div>
+                            <div class="past-thumb">今日の写真</div>
+                            <div class="past-thumb">今日の写真</div>
+                        </div>
+                    </div>
+                    <div class="sen">
+                        <div class="past-row">
+                            <h3>今日のお題</h3>
+                        </div>
+                        <div class="past-thumb">お題</div>
+                    </div>
+                    <div class="panel-header">
+                        <h3>今までの思い出</h3>
+                        <div class="more">もっと見る...</div>
+                    </div>
+                    <div class="past-row">
+                        <div class="past-thumb">01/01 +2</div>
+                        <div class="past-thumb">01/02 +1</div>
+                        <div class="past-thumb">01/03</div>
+                        <div class="past-thumb">01/04 +3</div>
+                    </div>
+            </section>
+
+            <!-- 今までのお題 -->
+            <section class="panel">
+                <div class="panel-header">
+                    <h3>今までのお題</h3>
+                    <div class="more">もっと見る...</div>
+                </div>
+                <div class="past-row large">
+                    <div class="past-thumb large">01/01<br>~~~お題~~~</div>
+                    <div class="past-thumb large">01/02<br>~~~お題~~~</div>
+                    <div class="past-thumb large">01/03<br>~~~お題~~~</div>
+                    <div class="past-thumb large">01/04<br>~~~お題~~~</div>
+                </div>
+            </section>
+
+            <div class="spacer"></div>
+            </main>
+
+        </div>
+
+        <div class="sidebar_right">
+            <p class="odai_txt">本日のお題</p>
+            <div class="odai">
+                <p>今日の晩御飯</p>
+            </div>
+            <div class="btn_group">
+                <a href="#" class="tweet_btn">お題を投稿</a>
+                <a href="#" class="tweet_btn">今日の思い出を投稿</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,19 @@
+<!-- templates/work10/todo_confirm_delete.html -->
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">本当に削除しますか？</h5>
+        <p>{{ object.title }} を削除します。取り消せません。</p>
+        <form method="post">
+          {% csrf_token %}
+          <button class="btn btn-danger">削除</button>
+          <a class="btn btn-secondary" href="{% url 'work10:todo_list' %}">キャンセル</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+<!-- templates/registration/login.html -->
+{% extends 'base.html' %}
+{% block title %}ログイン{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h4 class="card-title mb-3">ログイン</h4>
+        <form method="post">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="id_username" class="form-label">ユーザー名</label>
+            <input type="text" name="username" autofocus required id="id_username" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label for="id_password" class="form-label">パスワード</label>
+            <input type="password" name="password" required id="id_password" class="form-control">
+          </div>
+          <button class="btn btn-primary">ログイン</button>
+        </form>
+        <hr>
+        <p class="mb-0">初めての方は <a href="{% url 'work10:signup' %}">新規登録</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

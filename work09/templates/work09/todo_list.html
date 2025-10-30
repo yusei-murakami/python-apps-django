@@ -1,55 +1,57 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <title>TODOリスト</title>
-    <style>
-        body { font-family: sans-serif; margin: 30px; }
-        table { border-collapse: collapse; width: 100%; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
-        tr.overdue { background-color: #ffe0e0; }
-        .completed td.title { text-decoration: line-through; color: gray; }
-        form { margin-bottom: 20px; }
-        a { text-decoration: none; color: blue; }
-    </style>
+    <link rel="stylesheet" href="{% static 'work09/style.css' %}">
 </head>
 <body>
-    <h1>TODOリスト</h1>
+    <div class="container">
+        <h1>📝 TODOリスト</h1>
 
-    <form method="post">
-        {% csrf_token %}
-        <input type="text" name="title" placeholder="タイトル" required>
-        <input type="date" name="due_date" required>
-        <button type="submit">追加</button>
-    </form>
+        <form method="post" class="todo-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn">追加</button>
+        </form>
 
-    <div>
-        <a href="?sort=created_at">登録日順</a> | 
-        <a href="?sort=due_date">期限日順</a> | 
-        {% if show_incomplete %}
-            <a href="?">全件表示</a>
-        {% else %}
+        <div class="controls">
+            <a href="?sort=due_date">期限日順</a> |
+            <a href="?sort=created_at">登録日順</a> |
+            <a href="?filter=all">すべて表示</a> |
             <a href="?filter=incomplete">未完了のみ</a>
-        {% endif %}
-    </div>
+        </div>
 
-    <table>
-        <tr>
-            <th>状態</th>
-            <th>タスク</th>
-            <th>期限日</th>
-            <th>登録日</th>
-        </tr>
-        {% for todo in todos %}
-            <tr class="{% if todo.due_date < today and not todo.is_completed %}overdue{% endif %} {% if todo.is_completed %}completed{% endif %}">
-                <td>{{ todo.is_completed|yesno:"完了,未完了" }}</td>
-                <td class="title"><a href="{% url 'todo_edit' todo.id %}">{{ todo.title }}</a></td>
-                <td>{{ todo.due_date }}</td>
-                <td>{{ todo.created_at|date:"Y-m-d" }}</td>
+        <table>
+            <tr>
+                <th>状態</th>
+                <th>タスク</th>
+                <th>期限日</th>
+                <th>登録日</th>
             </tr>
-        {% empty %}
-            <tr><td colspan="4">タスクがありません。</td></tr>
-        {% endfor %}
-    </table>
+            {% for t in todos %}
+            <tr class="{% if t.is_expired %}expired{% endif %}">
+                <td>
+                    {% if t.is_completed %}
+                        ✅ 完了
+                    {% else %}
+                        ⏳ 未完了
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'todo_edit' t.pk %}" 
+                       class="{% if t.is_completed %}completed{% endif %}">
+                       {{ t.title }}
+                    </a>
+                </td>
+                <td>{{ t.due_date|date:"Y/m/d" }}</td>
+                <td>{{ t.created_at|date:"Y/m/d H:i" }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="4">タスクはありません。</td></tr>
+            {% endfor %}
+        </table>
+    </div>
 </body>
 </html>

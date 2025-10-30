@@ -1,0 +1,13 @@
+{% extends "work09/base.html" %}
+{% load static %}
+{% block content %}
+<div class="card p-3">
+  <h3>タスクを削除しますか？</h3>
+  <p>「{{ todo.title }}」を削除すると戻せません。</p>
+  <form method="post">
+    {% csrf_token %}
+    <button class="btn btn-danger" type="submit">はい、削除する</button>
+    <a href="{% url 'work09:list' %}" class="btn btn-secondary">キャンセル</a>
+  </form>
+</div>
+{% endblock %}

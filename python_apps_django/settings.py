@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
+    'django.contrib.humanize',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
@@ -44,7 +45,9 @@ INSTALLED_APPS = [
     'work07',
     'work08',
     'work09',
+    'work10',
     "work001",
+    'sns',
 ]
 
 MIDDLEWARE = [
@@ -62,7 +65,8 @@ ROOT_URLCONF = 'python_apps_django.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
+        # 'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -90,12 +94,18 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '3306',
         'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
             'charset': 'utf8mb4',
         },
     }
 }
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+# TEMPLATES[0]['DIRS'] = [ BASE_DIR / 'templates' ]  # Pathlib 形式の例
+# STATIC_URL = '/static/'
+# STATICFILES_DIRS = [ BASE_DIR / 'static' ]
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 
 
 

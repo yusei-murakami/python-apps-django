@@ -1,0 +1,103 @@
+/* 画面全体のリセットと基本設定 */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    background-color: #f5f6fa;
+    color: #333;
+}
+
+/* ヘッダー（上の青いバーを想定） */
+header {
+    background: #2d6cdf;
+    color: #fff;
+    padding: 15px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+header nav a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 15px;
+    font-size: 14px;
+}
+
+header nav a:hover {
+    text-decoration: underline;
+}
+
+/* 画面の中央余白 */
+.container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+/* カード（リストやフォームを囲う白い箱） */
+.card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px 25px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.07);
+}
+
+/* テーブル（一覧表示） */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+table th,
+table td {
+    padding: 12px 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+table th {
+    text-align: left;
+    font-weight: 600;
+    color: #555;
+    background: #f0f3f8;
+}
+
+table tr:hover {
+    background: #f9f9f9;
+}
+
+/* ボタンデザイン */
+.btn {
+    display: inline-block;
+    padding: 8px 14px;
+    font-size: 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.btn-primary {
+    background: #2d6cdf;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background: #1e54b7;
+}
+
+.btn-danger {
+    background: #e74c3c;
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background: #c0392b;
+}
