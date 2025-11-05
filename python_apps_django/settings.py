@@ -31,7 +31,25 @@ DEBUG = True
 # Removed invalid line
 from pathlib import Path
 
-ALLOWED_HOSTS = []
+import os
+
+# --- ホストとCSRF設定 ---
+if os.environ.get("RAILWAY_ENVIRONMENT"):
+    # Railwayデプロイ用
+    ALLOWED_HOSTS = ["web-production-40f9d.up.railway.app"]
+    CSRF_TRUSTED_ORIGINS = ["https://web-production-40f9d.up.railway.app"]
+else:
+    # ローカル開発用
+    ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+    CSRF_TRUSTED_ORIGINS = ["http://localhost:8000", "http://127.0.0.1:8000"]
+
+# --- 静的ファイル ---
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_DIRS = [BASE_DIR / "static"]
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+
 
 
 # Application definition
@@ -57,6 +75,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
