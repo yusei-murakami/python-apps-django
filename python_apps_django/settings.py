@@ -52,6 +52,7 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 
 
+
 # Application definition
 
 INSTALLED_APPS = [
