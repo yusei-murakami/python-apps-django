@@ -3,6 +3,11 @@ from .forms import EntryForm  # Ensure you import the form class
 from .models import Food, FoodEntry, Entry  # Import the Food, FoodEntry, and Entry models
 from datetime import date  # Import date for calendar_redirect
 import calendar  # Import calendar for calendar_view
+from django.shortcuts import render
+
+def index(request):
+    return render(request, 'tracker/index.html')
+
 
 def add_entry(request):
 	form = EntryForm(request.POST or None)  # Define the form

@@ -1,6 +1,8 @@
 from django.db import models
 from django.urls import reverse
 
+
+
 class Food(models.Model):
 	name = models.CharField(max_length=100, unique=True)
 	kcal_per_100g = models.FloatField(help_text='kcal per 100g')
@@ -16,6 +18,7 @@ class Entry(models.Model):
 	diastolic = models.IntegerField(null=True, blank=True)
 	sleep_hours = models.FloatField(null=True, blank=True)
 	calorie_intake = models.IntegerField(null=True, blank=True)
+	calorie_in = models.FloatField("摂取カロリー", null=True, blank=True)
 	calorie_burned = models.IntegerField(null=True, blank=True)
 	steps = models.IntegerField(null=True, blank=True)
 

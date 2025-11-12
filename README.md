@@ -25,6 +25,7 @@ Quick start:
 4. python manage.py migrate
 5. python manage.py runserver
 6. Open http://127.0.0.1:8000/
+tracker
 
 Notes:
 - Add foods from the `/` home page area if needed (there is a mini-form on Add Entry page)
