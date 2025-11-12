@@ -46,3 +46,7 @@ typing_extensions==4.15.0
 uritemplate==4.2.0
 urllib3==2.5.0
 whitenoise==6.11.0
+Django>=4.2
+pytz
+sqlparse
+matplotlib

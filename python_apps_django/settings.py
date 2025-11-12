@@ -20,12 +20,13 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-)n=ype&nqi$=6t80+d1yt090^9)w3u=17o8h0(75rr!vr(l!4l'
-
+SECRET_KEY = 'dev-secret-key'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 # Removed invalid line
@@ -79,6 +80,7 @@ INSTALLED_APPS = [
     'work10',
     "work001",
     'sns',
+    'tracker',
 ]
 
 MIDDLEWARE = [
@@ -221,6 +223,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [BASE_DIR / 'tracker' / 'static']
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

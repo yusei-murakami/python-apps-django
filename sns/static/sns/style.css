@@ -210,3 +210,31 @@ h1 {
     border-left: 2px solid #d3d3d3;
     /* 👈 左に線を追加 */
 }
+
+/* 設定ページ */
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.grid{
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 12px;
+}
+.side card{
+    background-color: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+}
+.item active{
+    font-weight: bold;
+    border-left: 4px solid var(--accent);
+    padding-left: 8px;
+    margin-bottom: 8px;
+}
+.item{
+    margin-bottom: 8px;
+    cursor: pointer;
+}

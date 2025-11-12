@@ -32,6 +32,7 @@ urlpatterns = [
     path('work09/', include('work09.urls')),
     path('work10/', include('work10.urls', namespace='work10')),
     path('sns/', include('sns.urls')),
+    path('', include('tracker.urls')),
 ]
 
 if settings.DEBUG:

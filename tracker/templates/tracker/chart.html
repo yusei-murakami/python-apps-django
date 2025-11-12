@@ -1,0 +1,42 @@
+{% extends 'tracker/base.html' %}
+{% block title %}グラフ{% endblock %}
+{% block content %}
+<div class="card" style="height: 400px;">
+  <h2>体重・歩数の推移</h2>
+  <canvas id="weightChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const ctx = document.getElementById('weightChart').getContext('2d');
+  const chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: JSON.parse('{{ dates|safe|escapejs }}'),
+      datasets: [
+        {
+          label: '体重(kg)',
+          data: JSON.parse('{{ weights|safe|escapejs }}'),
+          borderColor: '#7bbf6a',
+          borderWidth: 2,
+          fill: false
+        },
+        {
+          label: '歩数',
+          data: JSON.parse('{{ steps|safe|escapejs }}'),
+          borderColor: '#b5c99a',
+          borderWidth: 2,
+          fill: false
+        }
+      ]
+    },
+    options: { 
+      responsive: true, 
+      maintainAspectRatio: false 
+    }
+  });
+});
+</script>
+{% endblock %}
+

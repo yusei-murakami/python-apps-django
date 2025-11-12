@@ -1,0 +1,26 @@
+{% extends 'tracker/base.html' %}
+{% block title %}一覧{% endblock %}
+{% block content %}
+<div class="card">
+  <h2>すべての記録</h2>
+  <table>
+    <tr>
+      <th>日付</th><th>体温</th><th>体重</th><th>血圧</th>
+      <th>睡眠時間</th><th>摂取</th><th>消費</th><th>BMI</th><th>歩数</th>
+    </tr>
+    {% for r in records %}
+    <tr>
+      <td>{{ r.date }}</td>
+      <td>{{ r.temperature }}</td>
+      <td>{{ r.weight }}</td>
+      <td>{{ r.blood_pressure }}</td>
+      <td>{{ r.sleep_hours }}</td>
+      <td>{{ r.calorie_intake }}</td>
+      <td>{{ r.calorie_burned }}</td>
+      <td>{{ r.bmi|floatformat:1 }}</td>
+      <td>{{ r.steps }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

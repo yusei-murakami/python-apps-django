@@ -1,0 +1,24 @@
+{% extends 'tracker/base.html' %}
+{% block title %}ホーム{% endblock %}
+{% block content %}
+<div class="card">
+  <h2>最近の記録</h2>
+  {% if records %}
+  <table>
+    <tr>
+      <th>日付</th><th>体重(kg)</th><th>体温(℃)</th><th>歩数</th>
+    </tr>
+    {% for r in records %}
+    <tr>
+      <td>{{ r.date }}</td>
+      <td>{{ r.weight }}</td>
+      <td>{{ r.temperature }}</td>
+      <td>{{ r.steps }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% else %}
+  <p>まだ記録がありません。</p>
+  {% endif %}
+</div>
+{% endblock %}

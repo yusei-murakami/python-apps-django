@@ -1,0 +1,98 @@
+:root {
+    --bg: #f5efe6;
+    --card: #ffffff;
+    --accent: #7bbf6a;
+    --text: #333;
+  }
+  
+  body {
+    font-family: 'Yu Gothic', 'Meiryo', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    margin: 0;
+    padding: 0;
+  }
+  
+  header {
+    background: var(--accent);
+    color: white;
+    padding: 10px;
+    text-align: center;
+    border-bottom: 4px solid #b5c99a;
+  }
+  
+  nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+    font-weight: bold;
+  }
+  
+  nav a:hover {
+    text-decoration: underline;
+  }
+  
+  main {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .card {
+    background: var(--card);
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    padding: 20px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    border-bottom: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  th {
+    background: #e8f0e4;
+    font-weight: bold;
+  }
+  
+  .btn {
+    background: var(--accent);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  
+  .btn:hover {
+    background: #6aa85a;
+  }
+  
+  footer {
+    text-align: center;
+    padding: 10px;
+    font-size: 0.9em;
+    color: #666;
+  }
+  
+  @media (max-width: 600px) {
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    table {
+      font-size: 0.8em;
+    }
+    .card {
+      padding: 15px;
+    }
+  }
+  
