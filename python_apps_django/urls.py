@@ -21,7 +21,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from . import views
 urlpatterns = [
-    path('', views.index, name='index'),  # ←最上段へ
+    path('', views.index, name='index'),  
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
     path("work05/", include("work05.urls")),
@@ -29,7 +29,7 @@ urlpatterns = [
     path('work07/', include('work07.urls')),
     path("work001/", include("work001.urls")),
     path('work08/', include('work08.urls')),
-    path('work09/', include('work09.urls')),
+    path('work09/', include('work09.urls', namespace='work09')),
     path('work10/', include('work10.urls', namespace='work10')),
     path('sns/', include('sns.urls')),
     path('tracker/', include('tracker.urls')),

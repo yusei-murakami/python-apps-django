@@ -1,0 +1,61 @@
+/* custom.css - Tailwind handles most styling; add small enhancements here */
+
+/* slightly larger touch targets on mobile */
+input[type="text"], input[type="number"], input[type="date"], input, textarea, select {
+  min-height: 40px;
+  line-height: 1.1;
+}
+
+
+
+/* card accent */
+a.block {
+  position: relative;
+  overflow: visible;
+}
+a.block::after {
+  content: "";
+  position: absolute;
+  right: 14px;
+  top: 14px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(99,102,241,0.08); /* subtle indicator */
+}
+
+/* nicer table row hover */
+table tr:hover {
+  background: rgba(15,23,42,0.03);
+}
+
+/* calendar small tweaks */
+.fc .fc-daygrid-day-number {
+  font-size: 0.85rem;
+  color: #374151;
+}
+.fc .fc-event {
+  font-size: 0.78rem;
+  padding: 4px 6px;
+  border-radius: 6px;
+}
+
+/* mobile specific */
+@media (max-width: 640px) {
+  .max-w-3xl { padding-left: 12px; padding-right: 12px; max-width: 100%; }
+  header .max-w-3xl { padding-left: 12px; padding-right: 12px; }
+}
+
+/* subtle shadow for cards */
+.shadow-sm {
+  box-shadow: 0 6px 18px rgba(16,24,40,0.04);
+}
+
+/* rounded pill for buttons */
+button, .btn {
+  border-radius: 10px;
+}
+
+/* small utility to dim secondary text */
+.text-subtle { color: #6b7280; font-size: 0.95rem; }
+

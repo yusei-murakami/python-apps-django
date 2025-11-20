@@ -1,24 +1,158 @@
 {% extends 'tracker/base.html' %}
-{% block title %}ホーム{% endblock %}
 {% block content %}
-<div class="card">
-  <h2>最近の記録</h2>
-  {% if records %}
-  <table>
-    <tr>
-      <th>日付</th><th>体重(kg)</th><th>体温(℃)</th><th>歩数</th>
-    </tr>
-    {% for r in records %}
-    <tr>
-      <td>{{ r.date }}</td>
-      <td>{{ r.weight }}</td>
-      <td>{{ r.temperature }}</td>
-      <td>{{ r.steps }}</td>
-    </tr>
-    {% endfor %}
-  </table>
-  {% else %}
-  <p>まだ記録がありません。</p>
-  {% endif %}
+<div class="mb-4 flex items-center justify-between gap-2">
+
+  <a href="?view=card"
+    class="px-3 py-1 rounded-md {% if view == 'card' %}bg-blue-600 text-white{% else %}border bg-white{% endif %}">カード</a>
+  <a href="?view=table"
+    class="px-3 py-1 rounded-md {% if view == 'table' %}bg-blue-600 text-white{% else %}border bg-white{% endif %}">テーブル</a>
 </div>
+<div class="text-sm text-gray-500">モバイルに最適化済み</div>
+</div>
+
+{% if view == 'card' %}
+<div class="grid grid-cols-1 gap-4">
+  {% for m in measurements %}
+  <a href="/measurement/{{ m.pk }}/" class="block bg-white p-4 rounded-2xl shadow-sm hover:shadow-md transition">
+    <div class="flex justify-between items-start">
+      <div>
+        <div class="text-sm text-gray-400">{{ m.date }}</div>
+        <div class="mt-1 text-2xl font-semibold">{{ m.weight|default:'--' }} <span
+            class="text-sm font-medium text-gray-500">kg</span></div>
+        <div class="text-sm text-gray-500 mt-1">BMI: <span class="font-medium">{{ m.bmi|default:'--' }}</span></div>
+      </div>
+      <div class="text-right text-sm text-gray-500">
+        <div>体温: <span class="font-medium">{{ m.temperature|default:'--' }}</span> ℃</div>
+        <div>睡眠: <span class="font-medium">{{ m.sleep_hours|default:'--' }}</span> h</div>
+        <div>歩数: <span class="font-medium">{{ m.steps|default:'0' }}</span> 歩</div>
+      </div>
+    </div>
+  </a>
+  {% empty %}
+  <div class="bg-white p-4 rounded-2xl shadow-sm">まだ記録がありません。右上の「新規」から記録を追加できます。</div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="overflow-x-auto bg-white p-4 rounded-2xl shadow-sm">
+  <table class="min-w-full text-left">
+    <thead>
+      <tr class="text-sm text-gray-500">
+        <th class="py-2">日付</th>
+        <th>体重</th>
+        <th>BMI</th>
+        <th>体温</th>
+        <th>睡眠</th>
+        <th>摂取</th>
+        <th>消費</th>
+        <th>歩数</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for m in measurements %}
+      <tr class="border-t">
+        <td class="py-2"><a href="/measurement/{{ m.pk }}/" class="text-blue-600 hover:underline">{{ m.date }}</a></td>
+        <td>{{ m.weight|default:'--' }}</td>
+        <td>{{ m.bmi|default:'--' }}</td>
+        <td>{{ m.temperature|default:'--' }}</td>
+        <td>{{ m.sleep_hours|default:'--' }}</td>
+        <td>{{ m.intake_calories }}</td>
+        <td>{{ m.burned_calories }}</td>
+        <td>{{ m.steps }}</td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="8" class="py-4">まだ記録がありません。</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+
+<hr class="my-6">
+
+<section id="charts">
+  <h2 class="text-lg font-semibold mb-2">グラフ</h2>
+  <div class="bg-white p-4 rounded-2xl shadow-sm space-y-6">
+    <div>
+      <div class="text-sm text-gray-500 mb-2">体重推移</div>
+      <canvas id="weightChart" class="w-full h-48"></canvas>
+    </div>
+
+    <div>
+      <div class="text-sm text-gray-500 mb-2">カロリー（摂取 / 消費）</div>
+      <canvas id="calorieChart" class="w-full h-48"></canvas>
+    </div>
+
+    <div>
+      <div class="text-sm text-gray-500 mb-2">BMI 推移</div>
+      <canvas id="bmiChart" class="w-full h-48"></canvas>
+    </div>
+  </div>
+</section>
+
+<hr class="my-6">
+
+<section id="calendar">
+  <h2 class="text-lg font-semibold mb-2">カレンダー</h2>
+  <div id="calendarEl" class="bg-white p-4 rounded-2xl shadow-sm"></div>
+</section>
+
+<!-- scripts -->
+<script>
+  fetch('/api/charts/').then(r => r.json()).then(data => {
+    const labels = data.labels || [];
+
+    const weightCtx = document.getElementById('weightChart').getContext('2d');
+    new Chart(weightCtx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: '体重 (kg)',
+          data: data.weight,
+          tension: 0.25,
+          borderWidth: 2,
+          pointRadius: 3,
+          fill: false
+        }]
+      },
+      options: { responsive: true, maintainAspectRatio: false }
+    });
+
+    const calCtx = document.getElementById('calorieChart').getContext('2d');
+    new Chart(calCtx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [
+          { label: '摂取 (kcal)', data: data.intake },
+          { label: '消費 (kcal)', data: data.burned }
+        ]
+      },
+      options: { responsive: true, maintainAspectRatio: false }
+    });
+
+    const bmiCtx = document.getElementById('bmiChart').getContext('2d');
+    new Chart(bmiCtx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{ label: 'BMI', data: data.bmi, tension: 0.25, borderDash: [4, 2] }]
+      },
+      options: { responsive: true, maintainAspectRatio: false }
+    });
+  });
+
+  // render calendar
+  fetch('/api/calendar/').then(r => r.json()).then(events => {
+    const calendarEl = document.getElementById('calendarEl');
+    const cal = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth',
+      events: events,
+      height: 'auto'
+    });
+    cal.render();
+  });
+</script>
 {% endblock %}
