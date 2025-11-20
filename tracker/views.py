@@ -4,7 +4,7 @@ from .forms import FoodEntryForm, MeasurementForm
 from django.http import JsonResponse
 
 from tracker.forms import MeasurementForm
-from tracker.models import Measurement, Profile, FoodEntry
+from tracker.models import Measurement, Profile, FoodEntry, Entry, Food
 
 def get_profile():
     profile, _ = Profile.objects.get_or_create(pk=1)
@@ -16,70 +16,87 @@ def index(request):
     measurements = Measurement.objects.order_by('-date')
     return render(request,'tracker/index.html',{'measurements':measurements,'view':view})
 
+
 def add_measurement(request):
-    profile = get_profile()
-    if request.method == 'POST':
+    if request.method == "POST":
         form = MeasurementForm(request.POST)
         if form.is_valid():
-            m = form.save(commit=False)
-            # calculate BMI if weight provided and profile.height_cm exists
-            if m.weight:
-                height_m = profile.height_cm / 100
-                try:
-                    m.bmi = float(m.weight) / (height_m * height_m)
-                except Exception:
-                    m.bmi = None
-            m.save()
-            # handle food entries sent as repeated POST fields
+            # ① 日付から Entry を取得 or 作成
+            entry_date = form.cleaned_data["date"]
+            entry, created = Entry.objects.get_or_create(date=entry_date)
+
+            # ② Measurement を保存（Entry に紐付け、Measurement.date も同期）
+            measurement = form.save(commit=False)
+            measurement.entry = entry
+            measurement.date = entry.date  # ★ここ重要（これでunique衝突を防ぐ）
+            measurement.save()
+
+            # ③ 食品入力の処理
             idx = 1
-            total_intake = 0
             while True:
-                name = request.POST.get(f'food_name_{idx}')
-                qty = request.POST.get(f'food_qty_{idx}')
-                cal = request.POST.get(f'food_cal_{idx}')
+                name = request.POST.get(f"food_name_{idx}")
+                qty = request.POST.get(f"food_qty_{idx}")
+                cal = request.POST.get(f"food_cal_{idx}")
+
                 if not name:
                     break
+
                 try:
-                    qty_f = float(qty)
-                except (TypeError, ValueError):
-                    qty_f = 0
-                try:
-                    cal_f = float(cal)
-                except (TypeError, ValueError):
-                    cal_f = 0
-                fe = FoodEntry(measurement=m, name=name, quantity=qty_f, calories_per_100g=cal_f)
-                fe.save()
-                total_intake += float(fe.total_calories or 0)
+                    qty = float(qty)
+                    cal = float(cal)
+                except:
+                    idx += 1
+                    continue
+
+                food, _ = Food.objects.get_or_create(
+                    name=name,
+                    defaults={"kcal_per_100g": cal}
+                )
+
+                if food.kcal_per_100g != cal:
+                    food.kcal_per_100g = cal
+                    food.save()
+
+                FoodEntry.objects.create(
+                    entry=entry,
+                    measurement=measurement,
+                    food=food,
+                    amount=qty
+                )
+
                 idx += 1
-            if total_intake:
-                m.intake_calories = int(total_intake)
-                m.save()
-            return redirect('tracker:index')
+
+            return redirect("tracker_home")
+
     else:
         form = MeasurementForm()
-    food_form = FoodEntryForm()
-    return render(request,'tracker/add.html',{'form':form,'food_form':food_form,'profile':profile})
+
+    return render(request, "tracker/add.html", {"form": form})
+
 
 def view_measurement(request, pk):
-    m = get_object_or_404(Measurement, pk=pk)
-    foods = m.foods.all()
-    return render(request,'tracker/view.html',{'m':m,'foods':foods})
+    measurement = Measurement.objects.get(pk=pk)
+    food_entries = FoodEntry.objects.filter(measurement=measurement)
+
+    return render(request, 'tracker/view_measurement.html', {
+        'measurement': measurement,
+        'food_entries': food_entries
+    })
+
 
 def api_calendar(request):
-    # return events for FullCalendar
-    qs = Measurement.objects.all()
-    events = []
-    for m in qs:
-        title = []
-        if m.weight: title.append(f'W:{m.weight}kg')
-        if m.temperature: title.append(f'T:{m.temperature}℃')
-        if m.steps: title.append(f'S:{m.steps}歩')
-        events.append({
-            'title': ' '.join(title),
-            'start': m.date.isoformat(),
-            'url': f'/measurement/{m.pk}/'
+    measurements = Measurement.objects.all()
+
+    data = []
+    for m in measurements:
+        data.append({
+            "id": m.id,
+            "date": m.entry.date.strftime("%Y-%m-%d"),
+            "total_calories": m.total_calories,
         })
-    return JsonResponse(events, safe=False)
+
+    return JsonResponse(data, safe=False)
+
 
 def api_charts(request):
     # provide data for charts: weight, intake/burned, bmi

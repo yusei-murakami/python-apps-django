@@ -16,7 +16,7 @@ class Food(models.Model):
 # 2. Entry（1日分の健康記録）
 # -----------------------------
 class Entry(models.Model):
-    date = models.DateField(unique=True)
+    date = models.DateField()
 
     temperature = models.FloatField(null=True, blank=True)
     weight = models.FloatField(null=True, blank=True)
@@ -46,13 +46,23 @@ class Entry(models.Model):
 # 3. FoodEntry（食事記録）
 # -----------------------------
 class FoodEntry(models.Model):
-    entry = models.ForeignKey(Entry, related_name='foods', on_delete=models.CASCADE)
-    food = models.ForeignKey(Food, on_delete=models.CASCADE)
-    grams = models.FloatField()
+    measurement = models.ForeignKey(
+        'Measurement',
+        related_name='foods',
+        on_delete=models.CASCADE,
+        null=True,  # 既存行用に null を許可
+        blank=True
+    )
+    name = models.CharField(
+        max_length=100,
+        default='不明'  # 既存行に入れるデフォルト値
+    )
+    calories_per_100g = models.FloatField(default=0)
+    grams = models.FloatField(default=0)
 
     @property
-    def kcal(self):
-        return round(self.food.kcal_per_100g * (self.grams / 100.0))
+    def total_calories(self):
+        return (self.calories_per_100g * self.grams) / 100
 
 
 # -----------------------------

@@ -1,34 +1,35 @@
 {% extends 'tracker/base.html' %}
 {% block content %}
-  <div class="bg-white p-4 rounded-2xl shadow-sm">
-    <div class="flex items-start justify-between">
-      <div>
-        <h2 class="text-lg font-semibold">{{ m.date }}</h2>
-        <div class="text-sm text-gray-500">詳細</div>
-      </div>
-      <div class="text-sm text-gray-500">ID: {{ m.pk }}</div>
+<div class="bg-white p-4 rounded-2xl shadow-sm">
+  <div class="flex items-start justify-between">
+    <div>
+      <h2 class="text-lg font-semibold">{{ m.date }}</h2>
+      <div class="text-sm text-gray-500">詳細</div>
     </div>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
-      <div>体重: <span class="font-medium">{{ m.weight|default:'--' }}</span> kg</div>
-      <div>BMI: <span class="font-medium">{{ m.bmi|default:'--' }}</span></div>
-      <div>体温: <span class="font-medium">{{ m.temperature|default:'--' }}</span> ℃</div>
-      <div>睡眠: <span class="font-medium">{{ m.sleep_hours|default:'--' }}</span> h</div>
-      <div>血圧: <span class="font-medium">{{ m.bp_sys|default:'--' }}</span> / <span class="font-medium">{{ m.bp_dia|default:'--' }}</span></div>
-      <div>歩数: <span class="font-medium">{{ m.steps }}</span> 歩</div>
-      <div>摂取カロリー: <span class="font-medium">{{ m.intake_calories }}</span> kcal</div>
-      <div>消費カロリー: <span class="font-medium">{{ m.burned_calories }}</span> kcal</div>
-    </div>
-
-    <hr class="my-4">
-
-    <h3 class="font-medium">食事詳細</h3>
-    <ul class="list-disc pl-6 mt-2">
-      {% for f in foods %}
-        <li>{{ f.name }} — {{ f.quantity }} (kcal/100g: {{ f.calories_per_100g }}) → {{ f.total_calories }} kcal</li>
-      {% empty %}
-        <li>登録なし</li>
-      {% endfor %}
-    </ul>
+    <div class="text-sm text-gray-500">ID: {{ m.pk }}</div>
   </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
+    <div>体重: <span class="font-medium">{{ m.weight|default:'--' }}</span> kg</div>
+    <div>BMI: <span class="font-medium">{{ m.bmi|default:'--' }}</span></div>
+    <div>体温: <span class="font-medium">{{ m.temperature|default:'--' }}</span> ℃</div>
+    <div>睡眠: <span class="font-medium">{{ m.sleep_hours|default:'--' }}</span> h</div>
+    <div>血圧: <span class="font-medium">{{ m.bp_sys|default:'--' }}</span> / <span class="font-medium">{{
+        m.bp_dia|default:'--' }}</span></div>
+    <div>歩数: <span class="font-medium">{{ m.steps }}</span> 歩</div>
+    <div>摂取カロリー: <span class="font-medium">{{ m.intake_calories }}</span> kcal</div>
+    <div>消費カロリー: <span class="font-medium">{{ m.burned_calories }}</span> kcal</div>
+  </div>
+
+  <hr class="my-4">
+
+  <h3 class="font-medium">食事詳細</h3>
+  <ul class="list-disc pl-6 mt-2">
+    {% for f in foods %}
+    <li>{{ f.name }} — {{ f.quantity }} (kcal/100g: {{ f.calories_per_100g }}) → {{ f.total_calories }} kcal</li>
+    {% empty %}
+    <li>登録なし</li>
+    {% endfor %}
+  </ul>
+</div>
 {% endblock %}
