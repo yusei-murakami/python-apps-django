@@ -7,17 +7,17 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Health Manager</title>
 
-  <!-- Tailwind CDN -->
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- FullCalendar CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" />
-
-  <!-- Optional:ƒ Google Font -->
+  <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
   <!-- Custom CSS -->
   <link rel="stylesheet" href="{% static 'tracker/custom.css' %}" />
+
+  <!-- FullCalendar 正しいCDN ONLY -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css">
 </head>
 
 <body class="bg-gray-50 text-gray-800 font-sans"
@@ -41,7 +41,7 @@
 
       <nav class="flex items-center gap-2">
         <a href="/" class="hidden sm:inline px-3 py-1 rounded-md hover:bg-gray-100">一覧</a>
-        <a href="/add/"
+        <a href="/tracker/add/"
           class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-blue-600 text-white shadow-sm hover:opacity-95">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
             <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
@@ -57,9 +57,12 @@
     {% block content %}{% endblock %}
   </main>
 
-  <!-- Chart.js & FullCalendar -->
+  <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.js"></script>
+
+  <!-- FullCalendar JS (正しいバージョン) -->
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+
 </body>
 
 </html>

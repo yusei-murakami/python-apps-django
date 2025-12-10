@@ -17,7 +17,7 @@
 
 
 from django import forms
-from .models import FoodEntry
+from .models import FoodEntry, Measurement
 from django.forms import ModelForm
 from .models import Entry 
 
@@ -28,29 +28,29 @@ class FoodEntryForm(forms.ModelForm):
         
 class MeasurementForm(forms.ModelForm):
     class Meta:
-        model = Entry 
-        fields = ['date','temperature','weight','bp_sys','bp_dia','sleep_hours','calorie_burned','steps']
+        model = Measurement 
+        fields = ['date','temperature','weight','bp_sys','bp_dia','sleep_hours','burned_calories','steps']
         
         widgets = {
             'date': forms.DateInput(attrs={'type':'date'}),
         }
 
 
-class MeasurementForm(forms.ModelForm):
-    class Meta:
-        model = Entry 
+# class MeasurementForm(forms.ModelForm):
+#     class Meta:
+#         model = Measurement 
         
-        fields = [
-            'date',
-            'temperature',
-            'weight',
-            'bp_sys',      
-            'bp_dia',      
-            'sleep_hours',
-            'calorie_burned', 
-            'steps'
-        ]
+#         fields = [
+#             'date',
+#             'temperature',
+#             'weight',
+#             'bp_sys',      
+#             'bp_dia',      
+#             'sleep_hours',
+#             'burned_calories', # calorie_burned を burned_calories に変更
+#             'steps'
+#         ]
         
-        widgets = {
-            'date': forms.DateInput(attrs={'type':'date'}),
-        }
+#         widgets = {
+#             'date': forms.DateInput(attrs={'type':'date'}),
+#         }

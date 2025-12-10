@@ -144,7 +144,6 @@
     });
   });
 
-  // render calendar
   fetch('/api/calendar/').then(r => r.json()).then(events => {
     const calendarEl = document.getElementById('calendarEl');
     const cal = new FullCalendar.Calendar(calendarEl, {
