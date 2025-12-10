@@ -57,12 +57,14 @@ class FoodEntry(models.Model):
         max_length=100,
         default='不明'  # 既存行に入れるデフォルト値
     )
-    calories_per_100g = models.FloatField(default=0)
+    # food = models.ForeignKey(Food, on_delete=models.CASCADE)
     grams = models.FloatField(default=0)
+    kcal_per_100g = models.FloatField(default=0)
+
 
     @property
     def total_calories(self):
-        return (self.calories_per_100g * self.grams) / 100
+        return (self.kcal_per_100g * self.grams) / 100
 
 
 # -----------------------------

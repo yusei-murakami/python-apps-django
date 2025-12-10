@@ -76,17 +76,24 @@
   <div class="bg-white p-4 rounded-2xl shadow-sm space-y-6">
     <div>
       <div class="text-sm text-gray-500 mb-2">体重推移</div>
-      <canvas id="weightChart" class="w-full h-48"></canvas>
+      <div class="chart-wrapper h-48">
+        <canvas id="weightChart"></canvas>
+      </div>
     </div>
 
     <div>
       <div class="text-sm text-gray-500 mb-2">カロリー（摂取 / 消費）</div>
-      <canvas id="calorieChart" class="w-full h-48"></canvas>
+      <div class="chart-wrapper h-48">
+        <canvas id="calorieChart"></canvas>
+      </div>
     </div>
 
     <div>
       <div class="text-sm text-gray-500 mb-2">BMI 推移</div>
-      <canvas id="bmiChart" class="w-full h-48"></canvas>
+      <div class="chart-wrapper h-48">
+        <canvas id="bmiChart"></canvas>
+      </div>
+
     </div>
   </div>
 </section>
@@ -101,7 +108,7 @@
 <!-- scripts -->
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    fetch('/api/charts/')
+    fetch('/tracker/api/charts/')
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -129,8 +136,10 @@
           },
           options: { responsive: true, maintainAspectRatio: false }
         });
+        console.log('waight chart rendered');
 
         const calCtx = document.getElementById('calorieChart').getContext('2d');
+        console.log(data);
         new Chart(calCtx, {
           type: 'bar',
           data: {
@@ -142,6 +151,7 @@
           },
           options: { responsive: true, maintainAspectRatio: false }
         });
+        console.log('calorie chart rendered');
 
         const bmiCtx = document.getElementById('bmiChart').getContext('2d');
         new Chart(bmiCtx, {
@@ -160,10 +170,11 @@
           },
           options: { responsive: true, maintainAspectRatio: false }
         });
+        console.log('bmi chart rendered');
       })
       .catch(error => console.error('Error fetching chart data:', error));
 
-    fetch('/api/calendar/')
+    fetch('/tracker/api/calendar/')
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -174,7 +185,7 @@
         const calendarEl = document.getElementById('calendarEl');
         const calendar = new FullCalendar.Calendar(calendarEl, {
           initialView: 'dayGridMonth',
-          events: events,
+        events: events,
           height: 'auto',
           locale: 'ja',
           headerToolbar: {

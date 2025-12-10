@@ -61,10 +61,11 @@ def add_measurement(request):
                     food.save()
 
                 FoodEntry.objects.create(
-                    entry=entry,
                     measurement=measurement,
-                    food=food,
-                    amount=qty
+                    # food=food,
+                    name=food.name,
+                    kcal_per_100g=food.kcal_per_100g,
+                    grams=qty
                 )
 
                 idx += 1
@@ -94,8 +95,8 @@ def api_calendar(request):
     for m in measurements:
         data.append({
             "id": m.id,
-            "date": m.entry.date.strftime("%Y-%m-%d"),
-            "total_calories": m.total_calories,
+            "date": m.date.strftime("%Y-%m-%d"),
+            "title": m.burned_calories,
         })
 
     return JsonResponse(data, safe=False)
