@@ -42,20 +42,34 @@ table tr:hover {
 
 /* mobile specific */
 @media (max-width: 640px) {
-  .max-w-3xl { padding-left: 12px; padding-right: 12px; max-width: 100%; }
-  header .max-w-3xl { padding-left: 12px; padding-right: 12px; }
+  .max-w-3xl {
+    padding-left: 12px;
+    padding-right: 12px;
+    max-width: 100%;
+  }
+  header .max-w-3xl {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  /* FullCalendar ヘッダーの詰まり改善 */
+  .fc .fc-toolbar {
+    flex-wrap: wrap;         /* 行を折り返し可能にする */
+    gap: 6px;                /* ボタン同士の余白 */
+    padding: 4px 0;
+  }
+
+  .fc .fc-toolbar-title {
+    font-size: 1.2rem;       /* タイトルを少し小さく */
+    margin-bottom: 4px;
+  }
+
+  .fc .fc-button-group {
+    flex-wrap: wrap;
+  }
+
+  .fc .fc-button {
+    padding: 4px 6px;        /* スマホ用に少し小さい余白 */
+    font-size: 0.85rem;
+  }
 }
-
-/* subtle shadow for cards */
-.shadow-sm {
-  box-shadow: 0 6px 18px rgba(16,24,40,0.04);
-}
-
-/* rounded pill for buttons */
-button, .btn {
-  border-radius: 10px;
-}
-
-/* small utility to dim secondary text */
-.text-subtle { color: #6b7280; font-size: 0.95rem; }
-
